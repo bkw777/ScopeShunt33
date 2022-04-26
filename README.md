@@ -2,6 +2,8 @@
 
 ![](pcb/ScopeShunt33.jpg)
 
+![](enclosure/ScopeShunt33_enclosure.png)
+
 BOM https://www.digikey.com/short/n542tnnq
 
 PCB https://www.pcbway.com/project/shareproject/ScopeShunt33_095d5357.html
