@@ -134,8 +134,15 @@ module shell_bottom() {
 } // shell_bottom()
 
 module terminal_hole() {
- translate([11.5,14.6,tcoz/2+pz])
-  cube([11,11,tcoz],center=true);
+ translate([11.5,14,tcoz/2+pz])
+  hull()
+   mirror_copy([0,1,0])
+    translate([0,5,0])
+     mirror_copy([1,0,0]) 
+      translate([5,0,0])
+       cylinder(h=tcoz,r=0.4,center=true);
+  translate([16.3,18.1,tcoz/2+pz])
+   cylinder(h=tcoz,r=1.2,center=true);
 }
 
 module bnc_hole () {
@@ -149,7 +156,11 @@ module bnc_hole () {
  translate([bxo,-13,tcoz/2+pz])
   hull(){
    cylinder(h=tcoz,d=bd,center=true);
-   translate([0,-6.6,0]) cube([bd,1,tcoz],center=true);
+   translate([0,-6.6,0])
+    hull()
+     mirror_copy([1,0,0])
+      translate([bd/2-0.5,0,0])
+       cylinder(h=tcoz,r=0.5,center=true);
   }
 }
 
