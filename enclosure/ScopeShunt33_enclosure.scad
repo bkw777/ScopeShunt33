@@ -154,8 +154,8 @@ module shell_bottom() {
    // snaps female
    sx = 0.5+sl+0.5;
    sy = o+st/2+sc;
-   sz = sc+st+sc+o;
-   translate([0,0,-sz/2-fc-bcz-fc-wt+sz]){
+   sz = st+sc+o;
+   translate([0,0,sz/2-bcz-fc-wt-o]){
     mirror_copy([0,1,0])
      translate([0,-py/2-fc/2-o+sy/2,0])
       cube([sx,sy,sz],center=true);
