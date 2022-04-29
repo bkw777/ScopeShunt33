@@ -28,7 +28,9 @@ bottom_perimeter_lip = 1;
 fitment_clearance = 0.1;
 snap_length = 6;
 snap_thickness = wall_thickness;
-snap_clearance = fitment_clearance;
+snap_clearance = 0.3;
+bnc_diameter = 9.7;
+bnc_clearance = 1;
 
 cr = corner_radius;
 wt = wall_thickness;
@@ -152,7 +154,7 @@ module shell_bottom() {
    }
    
    // snaps female
-   sx = 0.5+sl+0.5;
+   sx = 1+sl+1;
    sy = o+st/2+sc;
    sz = st+sc+o;
    translate([0,0,sz/2-bcz-fc-wt-o]){
@@ -184,21 +186,23 @@ module terminal_hole() {
 }
 
 module bnc_hole () {
- bd = 11; // bnc barrel OD 9.7 + clearance
+ vw = bnc_diameter + bnc_clearance; // vertical width
+ hw = fc + bnc_diameter + fc; // horizontal width
  bxo = 11.5; // bnc x offset
+ cr = 0.4; //corner radius
  // hole in wall
  translate([bxo,-(o+wt+fc+tpl+o)/2-py/2+tpl+o,5.45])
   rotate([90,0,0])
-   cylinder(h=o+wt+fc+tpl+o,d=bd,center=true);
+   cylinder(h=o+wt+fc+tpl+o,d=vw,center=true);
  // hole in top
  translate([bxo,-13,tcoz/2+pz])
   hull(){
-   cylinder(h=tcoz,d=bd,center=true);
-   translate([0,-6.6,0])
+   cylinder(h=tcoz,d=hw,center=true);
+   translate([0,cr-7.1,0])
     hull()
      mirror_copy([1,0,0])
-      translate([bd/2-0.5,0,0])
-       cylinder(h=tcoz,r=0.5,center=true);
+      translate([hw/2-cr,0,0])
+       cylinder(h=tcoz,r=cr,center=true);
   }
 }
 
