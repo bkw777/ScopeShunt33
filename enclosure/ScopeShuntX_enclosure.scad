@@ -1,4 +1,4 @@
-// Enclosure for ScopeShunt33
+// Enclosure for ScopeShuntX
 
 // OUTPUT
 /***********************************************************/
@@ -12,20 +12,20 @@ display_assembly();
 // To generate this STL model of the PCB:
 // KiCad -> pcbnew -> File -> Export -> Step -> ScopeShunt33_pcb.step
 // FreeCAD -> File -> open *.step -> select body -> File -> Export -> STL -> ScopeShunt33_pcb.stl
-pcb_model_stl = "../pcb/ScopeShunt33_pcb.stl";
+pcb_model_stl = "../pcb/ScopeShuntX_pcb.stl";
 
 corner_radius = 2.5;
 wall_thickness = 1;
 pcb_thickness = 1.6;
-pcb_length = 35;
-pcb_width = 40;
-pcb_x_offset = -5.5;  // pcb model stl center
-pcb_y_offset = 0;     // "   "     "   "
+pcb_length = 18.5;
+pcb_width = 28;
+pcb_x_offset = 0;  // pcb model stl center
+pcb_y_offset = 0;  // "   "     "   "
 top_components_thickness = 0.8; // resistors 0.65
 bottom_components_thickness = 2;
-top_perimeter_lip = 0.8;
+top_perimeter_lip = 1;
 bottom_perimeter_lip = 1;
-fitment_clearance = 0.1;
+fitment_clearance = 0.2;
 snap_length = 6;
 snap_thickness = wall_thickness;
 snap_clearance = 0.3;
@@ -109,6 +109,7 @@ module shell_top() {
    // holes
    bnc_hole();
    terminal_hole();
+   
   } // diff cut
  } // difference
 
@@ -157,7 +158,7 @@ module shell_bottom() {
    sx = 1+sl+1;
    sy = o+st/2+sc;
    sz = st+sc+o;
-   translate([0,0,sz/2-bcz-fc-wt-o]){
+   translate([0,0,sz/2-bcz-fc-wt-o]) {
     mirror_copy([0,1,0])
      translate([0,-py/2-fc/2-o+sy/2,0])
       cube([sx,sy,sz],center=true);
@@ -171,31 +172,43 @@ module shell_bottom() {
 } // shell_bottom()
 
 module terminal_hole() {
- translate([11.5,14,tcoz/2+pz])
-  hull()
-   mirror_copy([0,1,0])
-    translate([0,5,0])
-     mirror_copy([1,0,0]) 
-      translate([5,0,0])
-       cylinder(h=tcoz,r=0.4,center=true);
-  // clearance for the dovetails
-  translate([16.3,14.5,tcoz/2+pz])
-   mirror_copy([0,1,0])
-    translate([0,3.55,0])
-     cylinder(h=tcoz,r=1.2,center=true);
+ x = 11.1; // opening x
+ y = 11.4; // opening y
+ xpos = 2.5; // x position
+ ypos = 6; // y position
+ zpos = tcoz/2+pz; // z position
+ cr = 0.5; // corner radius
+ dcr = 1; // dovetail clearance radius
+ dtx = 0.65; // dovetail hight from side wall
+ translate([xpos,ypos,zpos]) {
+   hull()
+    mirror_copy([0,1,0])
+     translate([0,y/2-cr,0])
+      mirror_copy([1,0,0]) 
+       translate([x/2-cr,0,0])
+        cylinder(h=tcoz,r=cr,center=true);
+   // clearance for the dovetails
+   translate([x/2-dcr+dtx,0,0])
+    mirror_copy([0,1,0])
+     translate([0,3.55,0])
+      hull()
+       mirror_copy([0,1,0])
+        translate([0,dcr,0])
+         cylinder(h=tcoz,r=dcr,center=true);
+  }
 }
 
 module bnc_hole () {
  vw = bnc_diameter + bnc_clearance; // vertical width
  hw = fc + bnc_diameter + fc; // horizontal width
- bxo = 11.5; // bnc x offset
+ bxo = 2.5; // bnc x offset
  cr = 0.4; //corner radius
  // hole in wall
  translate([bxo,-(o+wt+fc+tpl+o)/2-py/2+tpl+o,5.45])
   rotate([90,0,0])
    cylinder(h=o+wt+fc+tpl+o,d=vw,center=true);
  // hole in top
- translate([bxo,-13,tcoz/2+pz])
+ translate([bxo,-7,tcoz/2+pz])
   hull(){
    cylinder(h=tcoz,d=hw,center=true);
    translate([0,cr-7.1,0])
