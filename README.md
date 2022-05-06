@@ -38,12 +38,14 @@ Remember in all cases to use:
 
  * This design uses size 1206 resistors, which aren't available in power ratings over 1W. 100A would be 100% of the resistors rated capacity, which they can't actually sustain for long. If the resitors were the only consideration, then the practical limit would be more like 75A for continuous use, 100A for brief periods  
  * The PCB uses zone fills rather than traces for all connections, so it's difficult to calculate the max current the PCB traces can carry. Here is a table based on 4mm wide traces x 2 traces per pin. The PCB has significantly more copper than this, and can probably handle significantly more than these values.  
+
  | CU Oz | Amps<br>+10°C | Amps<br>+45°C |
  | --- | --- | --- |
  | 1 | 6.4 | 13 |
  | 2 | 10  | 20 |
  | 3 | 13.5 | 27.5 |
- TL,DR: If you're going to be routinely measuring over 10A, be sure to oder the PCB with 2oz copper or more.
+
+TL,DR: If you're going to be routinely measuring over 10A, be sure to oder the PCB with 2oz copper or more.
 
  * The terminal block is only rated for 16A
 
